@@ -1,75 +1,100 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import {  ImageBackground, StyleSheet, View } from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import Logo from "@/components/General/Logo";
+import Marker from "@/components/Marker/Marker";
+import TrucoButton from "@/components/Marker/TrucoButton";
+import ResetButton from "@/components/Marker/ResetButton";
 
-export default function HomeScreen() {
+export default function Index() {
+  const backgroundUri = require("@/assets/images/backgrounds/default-background.png");
+  const topLeftCards = require("@/assets/images/cards/top-left-cards.png");
+  const bottomRightCards = require("@/assets/images/cards/bottom-right-cards.png");
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.mainContainer}>
+      <ImageBackground
+        source={backgroundUri}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
+
+      <ImageBackground
+        source={topLeftCards}
+        style={styles.topLeftCards}
+      />
+
+      <ImageBackground
+        source={bottomRightCards}
+        style={styles.bottomRightCards}
+      />
+
+      <Logo />
+
+      <View style={styles.markersContainer}>
+        <Marker playerId={0}/>
+        <Marker playerId={1} side="right"/>
+      </View>
+
+      <View style={styles.actionsButtonsContainer}>
+        <TrucoButton />
+        <View style={styles.resetButtonsContainer}>
+          <ResetButton />
+          <ResetButton text="ZERAR PARTIDAS" type="trophies" />
+        </View>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  mainContainer: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-start",
+    alignItems: "center",
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  backgroundImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    zIndex: -1,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
+
+  topLeftCards: {
+    position: "absolute",
+    top: 0,
     left: 0,
-    position: 'absolute',
+    width: 80,
+    height: 120,
+    zIndex: 0,
+  },
+
+  bottomRightCards: {
+    position: "absolute",
+    bottom: -90,
+    right: 0,
+    width: 80,
+    height: 160,
+    zIndex: 0,
+  },
+
+  markersContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+
+  actionsButtonsContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 16,
+    gap: 32,
+  },
+
+  resetButtonsContainer: {
+    flexDirection: "row",
+    gap: 24,
   },
 });
